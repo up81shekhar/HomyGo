@@ -10,11 +10,24 @@ const listingSchema = new Schema({
         type: String,
         required: true,
     },
+    
+    // image: {
+    //     type: String,
+    //     default : "https://cdn.pixabay.com/photo/2024/01/25/12/30/mountain-8531778_1280.jpg",
+    //     set: (v) => v === "" ? "https://cdn.pixabay.com/photo/2024/01/25/12/30/mountain-8531778_1280.jpg" : v,
+    // },
+
     image: {
-        default : "https://cdn.pixabay.com/photo/2024/01/25/12/30/mountain-8531778_1280.jpg",
-        type: String,
-        set: (v) => v === "" ? "https://cdn.pixabay.com/photo/2024/01/25/12/30/mountain-8531778_1280.jpg" : v,
+        filename: {
+            type: String,
+            default: "default-image"
+        },
+        url: {
+            type: String,
+            default: "https://cdn.pixabay.com/photo/2024/01/25/12/30/mountain-8531778_1280.jpg"
+        }
     },
+
     price: {
         type: Number,
         required: true,
