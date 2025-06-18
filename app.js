@@ -36,20 +36,30 @@ app.get("/listing", async ( req , res ) => {
     res.render("listings/index.ejs", {allistings});
 });
 
-// app.get("/testListing",async (req,res)=>{
-//     let sampleListing = new Listing({
-//         title : "My Home",
-//         description : "Mountain view",
-//         price : 1200,
-//         location : "Himachal",
-//         country : "India",
-//     });
+//New ejs ROute
+app.get("/listings/new",(req,res)=>{
+    res.render("listings/new.ejs");
+});
 
-//     await sampleListing.save().then(()=>{
-//         console.log("Listing saved");
-//     }).catch((err) => {
-//         console.log(err);
-//     });
+//SHOW EJS ROUTE
+app.get("/listing/:id", async (req,res) => {
+    let {id} = req.params;
+    const listing = await Listing.findById(id);
+    res.render("listings/show.ejs",{listing});
+});
 
-//     res.send("Saved successful");
-// });
+//NEW LISTING ROUTE
+app.post("/listing",async (req,res) => {
+    let {title, description, image, price, location, country} = req.body;
+    const newListing = new Listing( {
+        title : title,
+        description : description,
+        image : image,
+        price : price,
+        location : location,
+        country : country,
+    });
+    await newListing.save();
+    console.log("saved successfully");
+    res.redirect("/listing");
+});
