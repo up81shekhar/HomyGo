@@ -11,22 +11,16 @@ const listingSchema = new Schema({
         required: true,
     },
     
-    // image: {
-    //     type: String,
-    //     default : "https://cdn.pixabay.com/photo/2024/01/25/12/30/mountain-8531778_1280.jpg",
-    //     set: (v) => v === "" ? "https://cdn.pixabay.com/photo/2024/01/25/12/30/mountain-8531778_1280.jpg" : v,
-    // },
-
     image: {
-        filename: {
-            type: String,
-            default: "default-image"
-        },
-        url: {
-            type: String,
-            default: "https://cdn.pixabay.com/photo/2024/01/25/12/30/mountain-8531778_1280.jpg"
-        }
+        type: String,
+        default : "https://cdn.pixabay.com/photo/2024/01/25/12/30/mountain-8531778_1280.jpg",
+        set: (v) => v === "" ? "https://cdn.pixabay.com/photo/2024/01/25/12/30/mountain-8531778_1280.jpg" : v,
     },
+
+    // image:{
+    //     type: String,
+    //     default: "https://cdn.pixabay.com/photo/2024/01/25/12/30/mountain-8531778_1280.jpg",
+    // },
 
     price: {
         type: Number,
