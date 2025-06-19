@@ -3,10 +3,12 @@ const app = express();
 const mongoose = require("mongoose");
 const Listing = require("./models/listing.js");
 const path = require("path");
+const methodOverride = require("method-override");
 
 app.set("view engine","ejs");
 app.set("views",path.join(__dirname,"views"));
 app.use(express.urlencoded({extended : true}));
+app.use(methodOverride("_method"));
 
 const Mongo_Link = "mongodb://127.0.0.1:27017/homyGo";
 
@@ -48,18 +50,40 @@ app.get("/listing/:id", async (req,res) => {
     res.render("listings/show.ejs",{listing});
 });
 
-//NEW LISTING ROUTE
+//Create ROUTE
 app.post("/listing",async (req,res) => {
-    let {title, description, image, price, location, country} = req.body;
-    const newListing = new Listing( {
-        title : title,
-        description : description,
-        image : image,
-        price : price,
-        location : location,
-        country : country,
-    });
+    // let {title, description, image, price, location, country} = req.body;
+    let newListing = new Listing(req.body.listing);
+    // const newListing = new Listing( {
+    //     title : title,
+    //     description : description,
+    //     image : image,
+    //     price : price,
+    //     location : location,
+    //     country : country,
+    // });
     await newListing.save();
-    console.log("saved successfully");
+    res.redirect("/listing");
+});
+
+//Edit listing Route
+app.get("/listing/:id/edit",async (req,res) => {
+    let {id} = req.params;
+    const listing = await Listing.findById(id);
+    res.render("listings/edit.ejs", {listing});
+});
+
+//UPDATE ROUTE
+app.put("/listing/:id", async (req,res) => {
+    let { id } = req.params;
+    await Listing.findByIdAndUpdate(id, {...req.body.listing})
+    res.redirect(`/listing/${id}`);
+});
+
+//delete route
+app.delete("/listing/:id", async (req, res) => {
+    let { id } = req.params;
+    let deleteListing = await Listing.findByIdAndDelete(id);
+    console.log(deleteListing);
     res.redirect("/listing");
 });
