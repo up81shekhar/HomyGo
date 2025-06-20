@@ -1,19 +1,31 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HomyGo</title>
-</head>
-<body>
+<% layout("layouts/boilerplate") %>
+
+  <body>
     <h1>All listing</h1>
-    <form action="/listings/new" method="get">
+    <!-- <form action="/listings/new" method="get">
         <button>Create new Listing</button>
-    </form>
+    </form> -->
+
+<div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1">
+      <% for(let listing of allistings){ %>
+    <div class="card col" style="width: 20rem">
+      <img src="<%= listing.image %>" class="card-img-top" alt="img" style="height: 20rem" />
+      <div class="card-body">
+        <p class="card-text">
+          <%= listing.title %> <br>
+          <%= listing.price.toLocaleString("en-IN") %> / night
+        </p>
+      </div>
+    </div>
+        <% } %>
+</div>
+
+
     <ul>
-    <% for(listing of allistings){ %>
-      <li><a href="/listing/<%= listing._id %>"><%= listing.title %></a></li>
-    <% } %>
+      <% for(listing of allistings){ %>
+        <li><a href="/listing/<%= listing._id %>">
+            <%= listing.title %>
+          </a></li>
+        <% } %>
     </ul>
-</body>
-</html>
+  </body>
